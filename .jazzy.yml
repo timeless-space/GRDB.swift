@@ -1,0 +1,11 @@
+author: "Gwendal Roué"
+author_url: "https://github.com/groue"
+github_url: "https://github.com/groue/GRDB.swift"
+github-file-prefix: "https://github.com/groue/GRDB.swift/tree/v3.7.0"
+copyright: "© 2015-2019 [Gwendal Roué](//github.com/groue) under [MIT license](//github.com/groue/GRDB.swift/blob/master/LICENSE)."
+module: "GRDB"
+module-version: "3.7"
+root-url: "http://groue.github.io/GRDB.swift/docs/3.7/"
+hide_documentation_coverage: true
+theme: fullwidth
+use_safe_filenames: true
