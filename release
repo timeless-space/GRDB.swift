@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+
+class Version
+  attr_reader :major
+  attr_reader :minor
+  attr_reader :patch
+  
+  def initialize(string)
+    major, minor, patch, sentinel = string.split('.')
+    throw ArgumentError.new("Invalid major component: '#{major}'") unless major =~ /[0-9]+/
+    throw ArgumentError.new("Invalid minor component: '#{minor}'") unless minor =~ /[0-9]+/
+    throw ArgumentError.new("Invalid patch component: '#{patch}'") unless patch =~ /[0-9]+/
+    throw ArgumentError.new("Invalid version: '#{string}'") unless sentinel.nil?
+    @major = major.to_i
+    @minor = minor.to_i
+    @patch = patch.to_i
+  end
+  
+  def to_s
+    "#{major}.#{minor}.#{patch}"
+  end
+  
+  def increment_major!
+    @major += 1
+    self
+  end
+  
+  def increment_minor!
+    @minor += 1
+    self
+  end
+  
+  def increment_patch!
+    @patch += 1
+    self
+  end
+  
+  def increment_major
+    dup.increment_major!
+  end
+  
+  def increment_minor
+    dup.increment_minor!
+  end
+  
+  def increment_patch
+    dup.increment_patch!
+  end
+end
+
+if __FILE__ == $0
+  gem 'plist'
+  require 'plist'
+  
+  # Version from Support/Info.plist
+  def current_version
+    info_plist_path = File.join(__dir__, 'Support', 'Info.plist')
+    info = Plist.parse_xml(info_plist_path)
+    version_string = info['CFBundleShortVersionString']
+    Version.new(version_string)
+  end
+  
+  case ARGV[0]
+  when 'current_version'
+    puts current_version.to_s
+  end
+end
